@@ -1,29 +1,27 @@
-import { useGLTF } from "@react-three/drei";
+import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-import { easing } from "maath";
 
 function Model({ children, color = "white", roughness = 0, ...props }) {
   const ref = useRef();
-  const { nodes, materials } = useGLTF("./models/c-transformed.glb");
-  console.log(ref);
-
-  useFrame((state, delta) => {
-    easing.dampC(ref.current.material.color, color, 0.2, delta);
-  });
+  const { nodes } = useGLTF("./models/duck.glb");
 
   return (
     <mesh
       ref={ref}
       castShadow
       receiveShadow
-      scale={10}
-      geometry={nodes.connector.geometry}
+      scale={5}
+      geometry={nodes.rubber_duck_toy.geometry}
     >
-      <meshStandardMaterial
-        metalness={0.2}
-        roughness={roughness}
-        map={materials.base.map}
+      <MeshTransmissionMaterial
+        clearcoat={1}
+        thickness={0.1}
+        anisotropicBlur={0.1}
+        chromaticAberration={0.1}
+        samples={8}
+        resolution={512}
+        color={color}
       />
 
       {children}

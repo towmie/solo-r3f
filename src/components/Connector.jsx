@@ -26,9 +26,7 @@ function Connector(props) {
         friction={0.1}
         colliders={false}
       >
-        <CuboidCollider args={[0.4, 0.4, 1.27]} />
-        <CuboidCollider args={[0.4, 1.27, 0.4]} />
-        <CuboidCollider args={[1.27, 0.4, 0.4]} />
+        <CuboidCollider args={[0.7, 0.7, 0.75]} />
 
         <Model {...props} />
       </RigidBody>
