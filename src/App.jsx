@@ -11,6 +11,7 @@ import { useMemo, useReducer, useRef } from "react";
 import * as THREE from "three";
 import Model from "./components/Model";
 import Connector from "./components/Connector";
+import Cursor from "./components/Cursor";
 
 const accents = ["#4060ff", "#20ffa0", "#ff4060", "#ffcc00"];
 const shuffle = (accent = 0) => [
@@ -29,8 +30,6 @@ function App() {
   const [accent] = useReducer((state) => ++state % accents.length, 0);
   const connectors = useMemo(() => shuffle(accent), [accent]);
 
-  console.log(connectors);
-
   return (
     <>
       <Physics gravity={[0, 0, 0]} debug>
@@ -38,7 +37,7 @@ function App() {
         <OrbitControls />
         <ambientLight intensity={1} />
         <directionalLight intensity={0.5} position={[0, 10, 0]} />
-        <Connector />
+        <Cursor />
         {connectors.map((props, index) => {
           return <Connector key={index} {...props} />;
         })}
