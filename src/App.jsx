@@ -10,6 +10,7 @@ import { Perf } from "r3f-perf";
 import { useMemo, useReducer, useRef } from "react";
 import * as THREE from "three";
 import Model from "./components/Model";
+import Connector from "./components/Connector";
 
 const accents = ["#4060ff", "#20ffa0", "#ff4060", "#ffcc00"];
 const shuffle = (accent = 0) => [
@@ -28,16 +29,18 @@ function App() {
   const [accent] = useReducer((state) => ++state % accents.length, 0);
   const connectors = useMemo(() => shuffle(accent), [accent]);
 
+  console.log(connectors);
+
   return (
     <>
-      <Physics gravity={[0, 0, 0]}>
+      <Physics gravity={[0, 0, 0]} debug>
         <Perf position="top-left" />
         <OrbitControls />
         <ambientLight intensity={1} />
         <directionalLight intensity={0.5} position={[0, 10, 0]} />
+        <Connector />
         {connectors.map((props, index) => {
-          console.log(index);
-          return <Model key={index} {...props} />;
+          return <Connector key={index} {...props} />;
         })}
       </Physics>
     </>

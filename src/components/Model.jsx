@@ -7,6 +7,7 @@ import { easing } from "maath";
 function Model({ children, color = "white", roughness = 0, ...props }) {
   const ref = useRef();
   const { nodes, materials } = useGLTF("./models/c-transformed.glb");
+
   useFrame((state, delta) => {
     easing.dampC(ref.current.material.color, color, 0.2, delta);
   });
@@ -24,6 +25,7 @@ function Model({ children, color = "white", roughness = 0, ...props }) {
         roughness={roughness}
         map={materials.base.map}
       />
+
       {children}
     </mesh>
   );
