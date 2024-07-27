@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  MeshTransmissionMaterial,
+  OrbitControls,
+  Plane,
+  useGLTF,
+} from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { Physics, RigidBody } from "@react-three/rapier";
+import { Perf } from "r3f-perf";
+import { useMemo, useReducer, useRef } from "react";
+import * as THREE from "three";
+import Model from "./components/Model";
+
+const accents = ["#4060ff", "#20ffa0", "#ff4060", "#ffcc00"];
+const shuffle = (accent = 0) => [
+  { color: "#444", roughness: 0.1 },
+  { color: "#444", roughness: 0.75 },
+  { color: "#444", roughness: 0.75 },
+  { color: "white", roughness: 0.1 },
+  { color: "white", roughness: 0.75 },
+  { color: "white", roughness: 0.1 },
+  { color: accents[accent], roughness: 0.1, accent: true },
+  { color: accents[accent], roughness: 0.75, accent: true },
+  { color: accents[accent], roughness: 0.1, accent: true },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [accent] = useReducer((state) => ++state % accents.length, 0);
+  const connectors = useMemo(() => shuffle(accent), [accent]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Physics gravity={[0, 0, 0]}>
+        <Perf position="top-left" />
+        <OrbitControls />
+        <ambientLight intensity={1} />
+        <directionalLight intensity={0.5} position={[0, 10, 0]} />
+        {connectors.map((props, index) => {
+          console.log(index);
+          return <Model key={index} {...props} />;
+        })}
+      </Physics>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
