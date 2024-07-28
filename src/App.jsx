@@ -1,8 +1,9 @@
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment, Loader, OrbitControls } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 import Connector from "./components/Connector";
 import Cursor from "./components/Cursor";
+import { Suspense } from "react";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         />
         <Environment preset="studio" environmentIntensity={0.9} />
         <Cursor />
-        {[...Array(10)].map((_, index) => (
+        {[...Array(8)].map((_, index) => (
           <Connector key={index} color="#4060ff" />
         ))}
         <Connector position={[10, 10, 5]}></Connector>

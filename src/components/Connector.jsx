@@ -1,6 +1,6 @@
 import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { useMemo, useRef } from "react";
+import { Suspense, useMemo, useRef } from "react";
 import * as THREE from "three";
 import Model from "./Model";
 
@@ -12,7 +12,7 @@ function Connector(props) {
 
   useFrame(() => {
     modelRef.current?.applyImpulse(
-      vector.copy(modelRef.current.translation()).negate().multiplyScalar(0.3)
+      vector.copy(modelRef.current.translation()).negate().multiplyScalar(0.5)
     );
   });
 
@@ -24,10 +24,9 @@ function Connector(props) {
         linearDamping={4}
         angularDamping={1}
         friction={0.1}
-        colliders={false}
+        colliders="hull"
       >
-        <CuboidCollider args={[0.7, 0.7, 0.75]} />
-
+        <CuboidCollider args={[0.5, 0.7, 0.75]} />
         <Model {...props} />
       </RigidBody>
     </>
