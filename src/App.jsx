@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Physics gravity={[0, 0, 0]}>
-        <Perf position="top-left" />
+        {/* <Perf position="top-left" /> */}
         <OrbitControls />
         <ambientLight intensity={1} />
         <directionalLight intensity={0.5} position={[0, 10, 0]} />
